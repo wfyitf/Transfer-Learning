@@ -15,7 +15,7 @@ Please install [MathJax Plugin for Github](https://chrome.google.com/webstore/de
 ![](http://latex2png.com/pngs/60dd81cb69610f718cdcbf8be180a001.png)
 <!--
 \begin{aligned} \mathbb{E}_{x \sim P_{T}}[\underbrace{\mathcal{L}(\mathcal{A}(x), y)}_{\epsilon(x)}] &=\int \epsilon(x) P_{T}(x) d x=\int \epsilon(x) \underbrace{\left[\alpha+(1-\alpha) \frac{P_{S}(x)}{P_{S}(x)}\right]}_{=1} P_{T}(x) d x \\ &=\alpha \mathbb{E}_{x \sim P_{T}}[\epsilon(x)]+(1-\alpha) \mathbb{E}_{x \sim P_{S}}\left[\epsilon(x) \frac{P_{T}(x)}{P_{S}(x)}\right] 
-\end{aligned} ->
+\end{aligned} -->
 
 上式子第一项为target importance, 第二项为source importance， 由于在应用中源域与目标域的实例均为有限值，目标函数可写成：
 
