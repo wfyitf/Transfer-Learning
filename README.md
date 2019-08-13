@@ -71,7 +71,7 @@ $$\mathcal{L}\left(W_{s}, W_{t}\right)=\left\|\Lambda\left(U^{T} L_{s} U\right)-
 
 其中$L_s$与$L_t$为源域与目标域正则化的拉普拉斯矩阵。所以迁移的问题便转化为在使得这个函数尽量小的情况下去最小化MMD。如下式所示：
 
-![](http://latex2png.com/pngs/6eb43870aa801bfc313fe49b84da11f6.png)
+![](http://latex2png.com/pngs/6eb43870aa801bfc313fe49b84da11f6.png){:height="50%" width="50%"}
 
 然而对于求得最优$W_s$与$W_t$，这不是一个凸问题，作者采用迭代方法将问题分解为两个步骤：
 
