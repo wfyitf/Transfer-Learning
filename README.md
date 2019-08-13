@@ -12,7 +12,7 @@ Please install [MathJax Plugin for Github](https://chrome.google.com/webstore/de
 本文是基于实例(instance based)的迁移学习典例，应用于医疗的人脸识别与受伤预测当中，为一种**监督学习**，其来源于以下均值误差的表达，讲来自目标域的实例的误差值表示为来自目标域与源域的两部分：
 
 \begin{aligned} 
-\mathbb{E}_{x \sim P_{T}}[\underbrace{\mathcal{L}(\mathcal{A}(x), y)}_{\epsilon(x)}] &=\int \epsilon(x) P_{T}(x) d x=\int \epsilon(x) \underbrace{\left[\alpha+(1-\alpha) \frac{P_{S}(x)}{P_{S}(x)}\right]}_{=1} P_{T}(x) d x \\ &=\alpha \mathbb{E}_{x \sim P_{T}}[\epsilon(x)]+(1-\alpha) \mathbb{E}_{x \sim P_{S}}\left[\epsilon(x) \frac{P_{T}(x)}{P_{S}(x)}\right] 
+\mathbb{E}_{x \sim P_{T}}[\underbrace{\mathcal{L}(\mathcal{A}(x), y)}_{\epsilon(x)}] 
 \end{aligned}
 
 
