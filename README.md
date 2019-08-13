@@ -5,6 +5,17 @@ Please install [MathJax Plugin for Github](https://chrome.google.com/webstore/de
 
 ### A Hybrid Instance-based Transfer Learning Method 
 
+Journal: Machine Learning for Health (ML4H) Workshop at NeurIPS 2018 (NIPS workshop)
+
+Bibcitation:
+
+@article{antropova2018machine,
+  title={Machine Learning for Health (ML4H) Workshop at NeurIPS 2018},
+  author={Antropova, Natalia and Bream, Andrew and Beaulieu-Jones, Brett K and Chen, Irene and Chivers, Corey and Dalca, Adrian and Finlayson, Sam and Fiterau, Madalina and Fries, Jason Alan and Ghassemi, Marzyeh and others},
+  journal={arXiv preprint arXiv:1811.07216},
+  year={2018}
+}
+
 基于实例的混合权重迁移学习
 
 #### 内容
@@ -29,3 +40,21 @@ $$w_x = w_{domain,x} + w_{task,x}$$
 所以这个源域权重分为两部分，第一个为域权重，**表明若源域的数据越像目标域，则权重越大，反之。** 第二个为任务权重， **表明若源域的数据对于目标预测准确，则权重为正，并且越准确此权重越大，反之则为负，越不准确此权重越小。** 对于权重的构造，相当于筛选了源域越像目标域的实例，并且筛选了对预测有帮助的实例。在直觉上来说也是非常有效的。
 
 并且通过实验证明这种方法在人脸识别与伤情预测中均取得了很好的效果。
+
+## Paper 2
+### Structural Domain Adaptation With Latent Graph Alignment
+Conference: 2018 25th IEEE International Conference on Image Processing (ICIP)
+
+Bibcitation:
+@inproceedings{zhang2018structural,
+  title={Structural Domain Adaptation with Latent Graph Alignment},
+  author={Zhang, Yue and Miao, Shun and Liao, Rui},
+  booktitle={2018 25th IEEE International Conference on Image Processing (ICIP)},
+  pages={3753--3757},
+  year={2018},
+  organization={IEEE}
+}
+
+#### 内容
+
+本文针对最小化**最大均值差异(Maximum Mean Discrepancy)** 提出了相对应的领域自适应方法，
