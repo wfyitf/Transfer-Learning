@@ -1,7 +1,7 @@
 # Transfer-Learning
 This repository contains contents on transfer learning.
 
-Please install [MathJax Plugin for Github](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima/related) to view the equations, expressions and $\Latex$ related etc..!
+Please install [MathJax Plugin for Github](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima/related) to view the equations, expressions and Latex related etc..!
 
 ### A Hybrid Instance-based Transfer Learning Method 
 
@@ -11,10 +11,10 @@ Please install [MathJax Plugin for Github](https://chrome.google.com/webstore/de
 
 本文是基于实例(instance based)的迁移学习典例，应用于医疗的人脸识别与受伤预测当中，为一种**监督学习**，其来源于以下均值误差的表达，讲来自目标域的实例的误差值表示为来自目标域与源域的两部分：
 
-\begin{equation} 
-\mathbb{E}_{x \sim P_{T}}[\underbrace{\mathcal{L}(\mathcal{A}(x), y)}_{\epsilon(x)}] &=\int \epsilon(x) P_{T}(x) d x=\int \epsilon(x) \underbrace{\left[\alpha+(1-\alpha) \frac{P_{S}(x)}{P_{S}(x)}\right]}_{=1} P_{T}(x) d x \\ 
-&=\alpha \mathbb{E}_{x \sim P_{T}}[\epsilon(x)]+(1-\alpha) \mathbb{E}_{x \sim P_{S}}\left[\epsilon(x) \frac{P_{T}(x)}{P_{S}(x)}\right] 
-\end{equation}
+$$\mathbb{E}_{x \sim P_{T}}[\underbrace{\mathcal{L}(\mathcal{A}(x), y)}_{\epsilon(x)}] =\int \epsilon(x) P_{T}(x) d x=\int \epsilon(x) \underbrace{\left[\alpha+(1-\alpha) \frac{P_{S}(x)}{P_{S}(x)}\right]}_{=1} P_{T}(x) dx$$
+
+上式子即可被写为两项：
+$$\mathbb{E}_{x \sim P_{T}}[\underbrace{\mathcal{L}(\mathcal{A}(x), y)}_{\epsilon(x)}] = \alpha \mathbb{E}_{x \sim P_{T}}[\epsilon(x)]+(1-\alpha) \mathbb{E}_{x \sim P_{S}}\left[\epsilon(x) \frac{P_{T}(x)}{P_{S}(x)}\right] $$
 
 上式子第一项为target importance, 第二项为source importance， 由于在应用中源域与目标域的实例均为有限值，目标函数可写成：
 
