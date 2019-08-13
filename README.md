@@ -3,9 +3,9 @@ This repository contains contents on transfer learning.
 
 Please install [MathJax Plugin for Github](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima/related) to view the equations, expressions and Latex related etc..!
 
-2019-08-13
+# 2019-08-13
 
-##Paper 1
+## Paper 1
 
 ### A Hybrid Instance-based Transfer Learning Method 
 
