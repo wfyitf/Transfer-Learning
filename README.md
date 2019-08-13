@@ -1,4 +1,4 @@
-# Transfer-Learning
+# Transfer-Learning Paper notes
 This repository contains contents on transfer learning.
 
 Please install [MathJax Plugin for Github](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima/related) to view the equations, expressions and Latex related etc..!
@@ -12,11 +12,6 @@ Please install [MathJax Plugin for Github](https://chrome.google.com/webstore/de
 本文是基于实例(instance based)的迁移学习典例，应用于医疗的人脸识别与受伤预测当中，为一种**监督学习**，其来源于以下均值误差的表达，讲来自目标域的实例的误差值表示为来自目标域与源域的两部分：
 
 ![](http://latex.codecogs.com/gif.latex?\\frac{\\partial J}{\\partial \\theta_k^{(j)}}=\\sum_{i:r(i,j)=1}{\\big((\\theta^{(j)})^Tx^{(i)}-y^{(i,j)}\\big)x_k^{(i)}}+\\lambda \\xtheta_k^{(j)})
-
-作者：Deep Reader
-链接：https://www.zhihu.com/question/26887527/answer/43166739
-来源：知乎
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 上式子第一项为target importance, 第二项为source importance， 由于在应用中源域与目标域的实例均为有限值，目标函数可写成：
 
