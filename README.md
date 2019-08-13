@@ -70,7 +70,8 @@ $$\operatorname{MMD}\left(W_{s}, W_{t}\right)=\left\|\frac{1}{n_{s}} \sum_{i=1}^
 $$\mathcal{L}\left(W_{s}, W_{t}\right)=\left\|\Lambda\left(U^{T} L_{s} U\right)-\Lambda\left(L_{t}\right)\right\|_{2}^{2}$$
 
 其中$L_s$与$L_t$为源域与目标域正则化的拉普拉斯矩阵。所以迁移的问题便转化为在使得这个函数尽量小的情况下去最小化MMD。如下式所示：
-\begin{aligned} \min _{\left\{W_{s}, W_{t}\right\} \in \Omega} &\left\|\frac{1}{n_{s}} \sum_{i} W_{s}^{T} x_{i}-\frac{1}{n_{t}} \sum_{j} W_{t}^{T} \hat{x}_{j}\right\|^{2} \\ & \text { s.t. }\left\|\Lambda\left(U^{T} L_{s} U\right)-\Lambda\left(L_{t}\right)\right\|_{2}^{2} \leq \epsilon \end{aligned}
+
+![]http://latex2png.com/pngs/bcf2c2f955ade71ba547032ee8bd74f8.png
 
 然而对于求得最优$W_s$与$W_t$，这不是一个凸问题，作者采用迭代方法将问题分解为两个步骤：
 
