@@ -99,11 +99,13 @@ $$ W_{t}^{i+1}=\underset{W}{\operatorname{argmin}} \mathcal{L}\left(W_{s}^{i}, W
 
 ## Paper 1
 
-### Domain Adaptation via Transfer Component Analysis
+### Domain Adaptation via Transfer Component Analysis(1) & Transfer Learning via Dimensionality Reduction(2)
 
-Conference: Proceedings of the Twenty-First International Joint Conference on Artificial Intelligence (IJCAI-09)
+Conference 1: Proceedings of the Twenty-First International Joint Conference on Artificial Intelligence (IJCAI-09)
 
-Bibcitation:@article{pan2010domain,
+Conference 2: Proceedings of the Twenty-Third AAAI Conference on Artificial Intelligence (2008) (AAAI-08)
+
+Bibcitation1: @article{pan2010domain,
   title={Domain adaptation via transfer component analysis},
   author={Pan, Sinno Jialin and Tsang, Ivor W and Kwok, James T and Yang, Qiang},
   journal={IEEE Transactions on Neural Networks},
@@ -114,9 +116,45 @@ Bibcitation:@article{pan2010domain,
   publisher={IEEE}
 }
 
+Bibcitation2: @inproceedings{pan2008transfer,
+  title={Transfer learning via dimensionality reduction.},
+  author={Pan, Sinno Jialin and Kwok, James T and Yang, Qiang and others},
+  booktitle={AAAI},
+  volume={8},
+  pages={677--682},
+  year={2008}
+}
+
 #### 内容
 
-今天介绍的是两篇在迁移学习当中非常重要以及非常优秀的成果，TCA与JDA。
+今天介绍的是两篇在迁移学习当中非常重要以及非常优秀的成果，TCA与JDA。首先TCA是一种unsupervised learning，相关的两篇论文的主要思想是**通过学习一个高维映射(kernel)，在此空间中源域与目标域的概率分布与标签的条件边缘保持近似（$p(X_S) \approx p(X_T)$，$p(y|X_S) \approx p(y|X_T)$**，并且在此条件下去最大化共同潜在域中的方差，以维持原有数据的特征属性（此限制具体参考
+[MVU](http://new.aaai.org/Papers/AAAI/2006/AAAI06-280.pdf)）。具体的步骤如下：
+
+- 1 首先在RKHS中定义如下距离(Maximum Mean Discrepancy)：
+$$\operatorname{Dist}(\mathrm{X}, \mathrm{Y})=\left\|\frac{1}{n_{1}} \sum_{i=1}^{n_{1}} \phi\left(x_{i}\right)-\frac{1}{n_{2}} \sum_{i=1}^{n_{2}} \phi\left(y_{i}\right)\right\|_{\mathcal{H}}$$
+将上式替换成源域与目标域之间的关系，可得：
+$$\operatorname{Dist}\left(X_{S}^{\prime}, X_{T}^{\prime}\right)=\left\|\frac{1}{n_{1}} \sum_{i=1}^{n_{1}} \phi\left(x_{S_{i}}\right)-\frac{1}{n_{2}} \sum_{i=1}^{n_{2}} \phi\left(x_{T_{i}}\right)\right\|_{\mathcal{H}}^{2}$$
+
+- 2 目标上式最小化，构造核矩阵$K$与$L$，如下图所示，图中有一些typo，比如列核矩阵应该有转置符号，不然维度会出现不对称：
+![](https://cdn.mathpix.com/snip/images/f4ewSgOVoLXfm9cdN5HP31bCvxucTpcU694CkBFwqqQ.original.fullsize.png)（参考:[MMD推导](https://zhuanlan.zhihu.com/p/63026435)）
+在原文中，$K=\left[\begin{array}{ll}{K_{S, S}} & {K_{S, T}} \\ {K_{T, S}} & {K_{T, T}}\end{array}\right]$, 
+$L_{i j}=\left\{\begin{array}{ll}{\frac{1}{n_{1}^{2}}} & {x_{i}, x_{j} \in X_{s r c}} \\ {\frac{1}{n_{2}^{2}}} & {x_{i}, x_{j} \in X_{t a r}} \\ {-\frac{1}{n_{1} n_{2}}} & {\text { otherwise }}\end{array}\right.$
+
+- 3 有了目标所需要的迹优化，根据MVU的启发，为保持数据散度/方差（距离）的一致性，需要最大化$trace(K)$，即最小化$-trace(K)$，再添加一个超参数，整个优化问题如下：
+\begin{array}{cl}{\min _{K=\tilde{K}+\varepsilon I}} & {\operatorname{trace}(K L)-\lambda \operatorname{trace}(K)} \\ {\text { s.t. }} & {K_{i i}+K_{j j}-2 K_{i j}=d_{i j}^{2}, \forall(i, j) \in \mathcal{N}} \\ {} & {K \mathbf{1}=\mathbf{0}, \widetilde{K} \succeq 0}\end{array}
+
+- 4 以上的问题可写为半定规划（SDP）来求得最优$K$，在有了$K$之后，可对$K$使用PCA来降维至$m\times(n_1+n_2)$维，对应的分别前$n_1$列即为源数据，后$n_2$列即为目标数据。然而此种方法无法泛化，不可对新的未知数据进行分类，所以作者在现有的核函数上通过降维构造一个$W$矩阵，来构造理想中的核矩阵（根据empirical kernel map）：
+$$\widetilde{K}=\left(K K^{-1 / 2} \widetilde{W}\right)\left(\widetilde{W}^{\top} K^{-1 / 2} K\right)=K W W^{\top} K$$
+其中$W=K^{-1 / 2} \widetilde{W} \in \mathbb{R}\left(n_{1}+n_{2}\right) \times m$为所需要求得映射矩阵。那么当有新的观测值出现时，可通过$\widetilde{k}\left(x_{i}, x_{j}\right)=k_{x_{i}}^{\top} W W^{\top} k_{x_{j}}$去映射至核矩阵。
+
+- 5 最终问题变为以下的问题：
+\begin{array}{cl}{\min _{W}} & {\operatorname{tr}\left(W^{\top} W\right)+\mu \operatorname{tr}\left(W^{\top} K L K W\right)} \\ {\text { s.t. }} & {W^{\top} K H K W=I}\end{array}
+第一项正则是为了防止出现零解与奇异解，第二项则是维持降维变换$W^TK$的散度。确保数据再映射后结构不变。上式可通过构造拉格朗日算子并求导得到以下的优化问题：
+\begin{array}{c}{\min _{W} \operatorname{tr}\left(\left(W^{\top} K H K W\right)^{\dagger} W^{\uparrow}(I+\mu K L K) W\right)} \\ 
+or \quad {\max _{W} \operatorname{tr}\left(\left(W^{\top}(I+\mu K L K) W\right)^{-1} W^{\top} K H K W\right)}\end{array}
+那么问题就转换为**广义瑞丽商**的求解。$W$可通过求得$(I+\mu K L K)^{-1} K H K$的前m个特征矢量拼合而成。这就完成了类似在4步骤中的PCA降维。在$W^TK$的空间中使用kNN分类器即可进行标准模式下的机器学习。
+
+总结来说，TCA首先将原始数据映射至RKHS来构造一个较为高维($n_1+n_2 \times n_1+n_2$)的核函数矩阵（以数据之间的内积形式的表示，这里我感觉有一些奇怪，可能是因为这个内积把target与source给关联起来，以达到最小距离的目的），然后再通过构造一个低维度的矩阵，将这个已经关联的数据降维至m，并保持数据之间的方差（结构），以此来得到较好的效果。与8-13 Paper2不同的是，这篇文章在降维时同时考虑到了矩阵结构的保持。
 
 
 ## Paper 2
