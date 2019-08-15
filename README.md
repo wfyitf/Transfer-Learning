@@ -172,3 +172,39 @@ Bibcitation:@inproceedings{long2013transfer,
 }
 
 #### 内容
+
+JDA的工作是TCA的延伸，在TCA当中，假设了在$P(\mathcal{Y}|X_S) \approx (\mathcal{Y}|X_T)$, 然而在现实当中，这样的条件概率发生的情况很少，需要考虑到这个差异。作者在此基础上首先在源域上训练了一个分类器，然后通过建立在目标域的伪标签（pseudo label），并通过不断迭代来减少条件概率的差异。源域数据$\in R^{m\times n_s}$，目标域数据$\in R^{m\times n_t}$，目标寻求变换$A^T \in R^{k\times m}$。其步骤如下：
+
+- 1 首先在RKHS中定义如下距离(Maximum Mean Discrepancy)，此步骤与TCA类似：
+$$\operatorname{Dist}(\mathrm{X}, \mathrm{Y})=\left\|\frac{1}{n_{1}} \sum_{i=1}^{n_{1}} \phi\left(x_{i}\right)-\frac{1}{n_{2}} \sum_{i=1}^{n_{2}} \phi\left(y_{i}\right)\right\|_{\mathcal{H}}$$
+将上式替换成源域与目标域之间的关系，可得：
+$$\operatorname{Dist}\left(X_{S}^{\prime}, X_{T}^{\prime}\right)=\left\|\frac{1}{n_{1}} \sum_{i=1}^{n_{1}} \phi\left(x_{S_{i}}\right)-\frac{1}{n_{2}} \sum_{i=1}^{n_{2}} \phi\left(x_{T_{i}}\right)\right\|_{\mathcal{H}}^{2}$$
+在JDA中，这个映射函数可为一个线性映射函数$A^T$，即：
+$$\left\|\frac{1}{n_{s}} \sum_{i=1}^{n_{s}} \mathbf{A}^{\mathrm{T}} \mathbf{x}_{i}-\frac{1}{n_{t}} \sum_{j=n_{s}+1}^{n_{s}+n_{t}} \mathbf{A}^{\mathrm{T}} \mathbf{x}_{j}\right\|^{2}=\operatorname{tr}\left(\mathbf{A}^{\mathrm{T}} \mathbf{X} \mathbf{M}_{0} \mathbf{X}^{\mathrm{T}} \mathbf{A}\right)$$
+
+- 2 条件概率自适应，在源域的数据上学习分类器（SVM,TCA等均可）后，应用于目标域的数据并且标上标签，现在在源域与目标域都有标签的情况下，对于标签的每一类$c \in {1,\cdots,C}$，其条件概率的具体为：
+$$\left\|\frac{1}{n_{s}^{(c)}} \sum_{\mathbf{x}_{i} \in \mathcal{D}_{s}^{(c)}} \mathbf{A}^{\mathrm{T}} \mathbf{x}_{i}-\frac{1}{n_{t}^{(c)}} \sum_{\mathbf{x}_{j} \in \mathcal{D}_{t}^{(c)}} \mathbf{A}^{\mathrm{T}} \mathbf{x}_{j}\right\|^{2}=\operatorname{tr}\left(\mathbf{A}^{\mathrm{T}} \mathbf{X} \mathbf{M}_{c} \mathbf{X}^{\mathrm{T}} \mathbf{A}\right)$$
+其中$\mathcal{D}_{s}^{(c)}=\left\{\mathbf{x}_{i} : \mathbf{x}_{i} \in \mathcal{D}_{s} \wedge y\left(\mathbf{x}_{i}\right)=c\right\}$是一组标签为$c$的源域实例。$n_s^{(c)}$为在源域上c类实例的个数，其余notation与之类似。
+其中$\mathbf{M}_c$为：
+<img src="https://cdn.mathpix.com/snip/images/B8Iz9rzRcym9G9mZOb2UCjv-Tv4QzNGAY6SK0Z2kS3A.original.fullsize.png" width="400" hegiht="213" align=center />
+
+- 3 有了以上每一类的误差值，优化问题便转化为：
+$$\min _{\mathbf{A}^{\mathrm{T}} \mathbf{X} \mathbf{H} \mathbf{X}^{\mathrm{T}} \mathbf{A}=\mathbf{I}} \sum_{c=0}^{C} \operatorname{tr}\left(\mathbf{A}^{\mathrm{T}} \mathbf{X} \mathbf{M}_{c} \mathbf{X}^{\mathrm{T}} \mathbf{A}\right)+\lambda\|\mathbf{A}\|_{F}^{2}$$
+这个问题包含了以下几个目标函数：
+    - 源域与目标域数据本身分布之间的差异。
+    - 对于标签的条件概率分布之间的差异。
+    - 映射后的数据要尽量保持大的方差。即结构保持不变，同TCA。
+   
+- 4 同时作者也给出了核-JDA的方法，即将$A^T$替换为$K$,既得：
+$$\min _{\mathbf{A}^{\mathrm{T}} \mathbf{K} \mathbf{H}^{\mathrm{T}} \mathbf{A}=\mathbf{I}} \sum_{c=0}^{C} \operatorname{tr}\left(\mathbf{A}^{\mathrm{T}} \mathbf{K} \mathbf{M}_{c} \mathbf{K}^{\mathrm{T}} \mathbf{A}\right)+\lambda\|\mathbf{A}\|_{F}^{2}$$
+
+- 5 通过拉格朗日算子去解得以上的优化目标，可得：
+\begin{aligned} L &=\operatorname{tr}\left(\mathbf{A}^{\mathrm{T}}\left(\mathbf{X} \sum_{c=0}^{C} \mathbf{M}_{c} \mathbf{X}^{\mathrm{T}}+\lambda \mathbf{I}\right) \mathbf{A}\right) \\ &+\operatorname{tr}\left(\left(\mathbf{I}-\mathbf{A}^{\mathrm{T}} \mathbf{X} \mathbf{H} \mathbf{X}^{\mathrm{T}} \mathbf{A}\right) \mathbf{\Phi}\right) \end{aligned}
+通过对$A$求导，可得到一下的规范化的特征值分解：
+$$ \left(\mathbf{X} \sum_{c=0}^{C} \mathbf{M}_{c} \mathbf{X}^{\mathrm{T}}+\lambda \mathbf{I}\right) \mathbf{A}=\mathbf{X} \mathbf{H} \mathbf{X}^{\mathrm{T}} \mathbf{A} \boldsymbol{\Phi} $$
+即以下的目标函数：
+$$\left(\mathbf{X} \mathbf{H} \mathbf{X}^{\mathrm{T}} \right)^{-1}\left(\mathbf{X} \sum_{c=0}^{C} \mathbf{M}_{c} \mathbf{X}^{\mathrm{T}}+\lambda \mathbf{I}\right) \mathbf{A}= \lambda \mathbf{A}  $$
+选择矩阵$\left(\mathbf{X} \mathbf{H} \mathbf{X}^{\mathrm{T}} \right)^{-1}\left(\mathbf{X} \sum_{c=0}^{C} \mathbf{M}_{c} \mathbf{X}^{\mathrm{T}}+\lambda \mathbf{I}\right) \in R^{n \times n}$最小的$k$个特征值所构成的特征矩阵即为$A$。
+
+- 6 再每次求得$A$后，不断迭代源域标签直至收敛即可，算法如下：
+<img src="https://cdn.mathpix.com/snip/images/N-H5_O1o1juU-gCdWDZyF-aUD_YUFCkkVk6I15dEn0Q.original.fullsize.png" width="500" hegiht="313" align=center />
