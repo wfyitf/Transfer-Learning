@@ -1,4 +1,4 @@
-# Transfer-Learning Paper notes
+# Transfer-Learning Paper Notes
 This repository contains paper summary contents on transfer learning.
 
 Please install [MathJax Plugin for Github](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima/related) to view the equations, expressions and Latex related etc..!
@@ -42,7 +42,7 @@ Papers are described and summarized in Chinese as follows。
 
 ### 2019-08-21
 
-15.[Visual Domain Adaptation with Manifold Embedded Distribution Alignment](https://arxiv.org/pdf/1807.07258.pdf) <font color="#dd0000">MEDA</font><br />
-16.[EASY TRANSFER LEARNING BY EXPLOITING INTRA-DOMAIN STRUCTURES](https://arxiv.org/pdf/1904.01376.pdf)
+15. [Visual Domain Adaptation with Manifold Embedded Distribution Alignment](https://arxiv.org/pdf/1807.07258.pdf) <font color="#dd0000">MEDA</font><br />
+16. [EASY TRANSFER LEARNING BY EXPLOITING INTRA-DOMAIN STRUCTURES](https://arxiv.org/pdf/1904.01376.pdf)
 
 
