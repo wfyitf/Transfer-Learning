@@ -8,6 +8,8 @@ Papers are described and summarized in Chinese as follows。
 
 以下是一些更新的目录，时常更新，欢迎指正。小白刚入迁移坑，希望大家多发paper多做贡献！
 
+# Paper Notes for Transfer Learning
+
 ### 2019-08-13
 1. [A Hybrid Instance-based Transfer Learning Method (Weighted, NIPS 2018, workshop)](https://arxiv.org/pdf/1812.01063.pdf)
 2. [Structural Domain Adaptation With Latent Graph Alignment (2018, ICIP)](https://ieeexplore.ieee.org/abstract/document/8451245)
@@ -27,3 +29,20 @@ Papers are described and summarized in Chinese as follows。
 ### 2019-08-18
 9. [Unsupervised Visual Domain Adaptation Using Subspace Alignment(ICCV-13)](https://hal.archives-ouvertes.fr/hal-00869417/document) <font color="#dd0000">SA</font><br />
 10. [Joint Geometrical and Statistical Alignment for Visual Domain Adaptation(CVPR-17)](https://arxiv.org/pdf/1705.05498.pdf) <font color="#dd0000">JGSA</font><br />
+
+### 2019-08-19
+
+11. [Geodesic Flow Kernel for Unsupervised Domain Adaptation](http://boqinggong.info/papers/cvpr12.pdf) <font color="#dd0000">GFK</font><br />
+12. [Balanced Distribution Adaptation for Transfer Learning](https://arxiv.org/pdf/1807.00516.pdf) <font color="#dd0000">BDA</font><br />
+
+### 2019-08-20
+
+13. [Distant domain transfer learning](https://www.aaai.org/ocs/index.php/AAAI/AAAI17/paper/download/14446/14451)
+14. [Unsupervised Domain Adaptation with Distribution Matching Machines](http://ise.thss.tsinghua.edu.cn/~mlong/doc/distribution-matching-machines-aaai18.pdf) <font color="#dd0000">DMM</font><br />
+
+### 2019-08-21
+
+15.[Visual Domain Adaptation with Manifold Embedded Distribution Alignment](https://arxiv.org/pdf/1807.07258.pdf) <font color="#dd0000">MEDA</font><br />
+16.[EASY TRANSFER LEARNING BY EXPLOITING INTRA-DOMAIN STRUCTURES](https://arxiv.org/pdf/1904.01376.pdf)
+
+
